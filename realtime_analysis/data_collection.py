@@ -43,11 +43,12 @@ def check_time(minimum, maximum):
     current_hour = int(datetime.today().strftime('%H'))
     return current_hour >= minimum and current_hour <= maximum
 
-while True:
-    json_feed = fetch_feed()
-    flattened = flatten_feed(json_feed)
-    # Maximum pull requests: 1000/day; 4 hours * 60 minutes * 3 pulls/min = 720 pulls/day
-    # File size: 33 kb/pull * 720 pulls/day * 7 days = 166 mb
-    if check_time(8, 12):    
-        save_feed_stamped(flattened)
-    time.sleep(20)
+# Maximum pull requests: 1000/day; 4 hours * 60 minutes * 3 pulls/min = 720 pulls/day
+# File size: 33 kb/pull * 720 pulls/day * 7 days = 166 mb
+if __name__ == "__main__":
+    while True:
+        json_feed = fetch_feed()
+        flattened = flatten_feed(json_feed)
+        if check_time(8, 12):    
+            save_feed_stamped(flattened)
+        time.sleep(20)
